@@ -65,6 +65,7 @@ class ChatDetailScreen extends GetView<ChatDetailController> {
 
   Widget _buildProfileBox() {
     return GetBuilder<UserController>(
+      id: controller.userIndex,
       builder: (userController) => ProfileStatusBox(
         user: userController.connectUser[controller.userIndex],
       ),

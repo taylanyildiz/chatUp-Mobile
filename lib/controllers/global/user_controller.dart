@@ -47,6 +47,15 @@ class UserController extends GetxController {
     update();
   }
 
+  void setTyping(User user) {
+    int index =
+        connectUser.indexWhere((element) => element.phone == user.phone);
+    if (index != -1) {
+      connectUser[index] = user;
+      update([index]);
+    }
+  }
+
   void addMessage(Message message) {
     final sender = message.sender;
     final receiver = message.receiver;
