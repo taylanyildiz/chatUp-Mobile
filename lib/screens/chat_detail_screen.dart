@@ -44,7 +44,6 @@ class ChatDetailScreen extends GetView<ChatDetailController> {
 
   Widget _buildMessageBox() {
     return GetBuilder<UserController>(
-      id: controller.user.phone,
       builder: (userController) => Expanded(
         child: Scrollbar(
           child: ListView.builder(
