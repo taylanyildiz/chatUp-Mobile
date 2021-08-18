@@ -1,5 +1,6 @@
 import 'package:chat_app/models/message.dart';
 import 'package:chat_app/models/user.dart';
+import 'package:flutter/cupertino.dart';
 import '/services/service.dart';
 import 'package:get/get.dart';
 
@@ -11,8 +12,14 @@ class UserController extends GetxController {
 
   final secureStorage = Get.find<SecureStorage>();
 
+  late ScrollController scrollController;
+
+  late FocusNode focusNode;
+
   @override
   void onInit() {
+    scrollController = ScrollController();
+    focusNode = FocusNode();
     currentUser = secureStorage.currentUser;
     token = secureStorage.token;
     super.onInit();
@@ -37,12 +44,16 @@ class UserController extends GetxController {
     update();
   }
 
-  void addConnectUser(User user) {
+  void addUpdateConnectUser(User user, {bool? isOnline}) {
     int index = connectUser.indexWhere((u) => u.phone == user.phone);
-    if (index == -1) {
-      connectUser.add(user);
+    if (isOnline == null) {
+      if (index == -1) {
+        connectUser.add(user);
+      } else {
+        connectUser[index].isOnline = true;
+      }
     } else {
-      connectUser[index] = user;
+      connectUser[index].isOnline = isOnline;
     }
     update();
   }
@@ -52,8 +63,8 @@ class UserController extends GetxController {
         connectUser.indexWhere((element) => element.phone == user.phone);
     if (index != -1) {
       connectUser[index].typing = status;
+      update();
     }
-    update();
   }
 
   void addMessage(Message message) {
@@ -63,7 +74,12 @@ class UserController extends GetxController {
         (u) => u.phone == sender!.phone || u.phone == receiver!.phone);
     if (index != -1) {
       connectUser[index].messages.add(message);
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+      update([index]);
     }
-    update();
   }
 }

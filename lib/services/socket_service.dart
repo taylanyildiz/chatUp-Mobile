@@ -48,19 +48,19 @@ class SocketService extends GetxService {
       // get all user
       socket.on('get all user', (data) {
         final user = User.fromJson(data);
-        userController.addConnectUser(user);
+        userController.addUpdateConnectUser(user);
       });
 
       // new user connect
       socket.on('new user connect', (data) {
         final user = User.fromJson(data);
-        userController.addConnectUser(user);
+        userController.addUpdateConnectUser(user);
       });
 
       // listen offline user
       socket.on('user disconnect', (data) {
         final user = User.fromJson(data);
-        userController.addConnectUser(user);
+        userController.addUpdateConnectUser(user, isOnline: false);
       });
 
       // listen typing

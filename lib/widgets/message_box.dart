@@ -1,5 +1,4 @@
 import 'package:chat_app/constants/constant.dart';
-import 'package:chat_app/models/message.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ class MessageBox extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final isMe = false;
+    final isMe = user.messages[index].sender!.phone == currentUser.phone;
     final isRead = true;
     return Container(
       margin: EdgeInsets.only(
@@ -23,7 +22,7 @@ class MessageBox extends StatelessWidget {
         left: isMe ? 150.0 : 0.0,
         top: 10.0,
       ),
-      padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
       decoration: BoxDecoration(
         color: isMe ? CustomColors.currentMessageBox : CustomColors.messageBox,
         borderRadius: BorderRadius.only(
@@ -47,7 +46,7 @@ class MessageBox extends StatelessWidget {
             ),
           ),
           Text(
-            '13:40',
+            '',
             style: TextStyle(
               color: isMe ? Colors.black : Colors.white,
               fontSize: 13.0,

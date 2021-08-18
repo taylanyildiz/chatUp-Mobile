@@ -13,6 +13,7 @@ class ChatDetailScreen extends GetView<ChatDetailController> {
 
   @override
   Widget build(BuildContext context) {
+    final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -23,50 +24,11 @@ class ChatDetailScreen extends GetView<ChatDetailController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildProfileBox(),
-              _buildMessageBox(),
+              _buildMessageBox(isKeyboard),
               _buildInputMessageBox()
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  InputMessage _buildInputMessageBox() {
-    return InputMessage(
-      onChanded: controller.onChanged,
-      onSend: controller.sendMessage,
-      onAdd: () {
-        log('message');
-      },
-    );
-  }
-
-  Widget _buildMessageBox() {
-    return GetBuilder<UserController>(
-      builder: (userController) => Expanded(
-        child: Scrollbar(
-          child: ListView.builder(
-            physics: BouncingScrollPhysics(),
-            itemCount: userController
-                .connectUser[controller.userIndex].messages.length,
-            itemBuilder: (_, index) {
-              return MessageBox(
-                index: index,
-                user: userController.connectUser[controller.userIndex],
-                currentUser: userController.currentUser!,
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProfileBox() {
-    return GetBuilder<UserController>(
-      builder: (userController) => ProfileStatusBox(
-        user: userController.connectUser[controller.userIndex],
       ),
     );
   }
@@ -105,6 +67,59 @@ class ChatDetailScreen extends GetView<ChatDetailController> {
         ),
       ),
       centerTitle: true,
+    );
+  }
+
+  Widget _buildProfileBox() {
+    return GetBuilder<UserController>(
+      builder: (userController) => ProfileStatusBox(
+        user: userController.connectUser[controller.userIndex],
+      ),
+    );
+  }
+
+  Widget _buildMessageBox(isKeyboard) {
+    return GetBuilder<UserController>(
+      id: controller.userIndex,
+      builder: (userController) => Expanded(
+        child: Scrollbar(
+          controller: userController.scrollController,
+          child: ListView.builder(
+            controller: userController.scrollController,
+            padding: EdgeInsets.zero,
+            physics: BouncingScrollPhysics(),
+            itemCount: userController
+                    .connectUser[controller.userIndex].messages.length +
+                1,
+            itemBuilder: (_, index) {
+              if (index ==
+                  userController
+                      .connectUser[controller.userIndex].messages.length)
+                return SizedBox(
+                  height: isKeyboard ? 60 : 0,
+                  width: Get.width,
+                );
+              return MessageBox(
+                index: index,
+                user: userController.connectUser[controller.userIndex],
+                currentUser: userController.currentUser!,
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInputMessageBox() {
+    return GetBuilder<UserController>(
+      builder: (userController) => InputMessage(
+        onChanded: controller.onChanged,
+        onSend: controller.sendMessage,
+        onAdd: () {
+          log('message');
+        },
+      ),
     );
   }
 }
