@@ -67,8 +67,7 @@ class SocketService extends GetxService {
       socket.on('typing', (data) {
         final status = data['status'];
         final sender = User.fromJson(data['sender']);
-        sender.typing = status;
-        userController.setTyping(sender);
+        userController.setTyping(sender, status);
       });
 
       // listen message
