@@ -63,7 +63,7 @@ class UserController extends GetxController {
         (u) => u.phone == sender!.phone || u.phone == receiver!.phone);
     if (index != -1) {
       connectUser[index].messages.add(message);
-      update([index]);
+      update([connectUser[index]]);
     }
   }
 }

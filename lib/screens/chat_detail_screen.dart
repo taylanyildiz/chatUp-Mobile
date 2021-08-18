@@ -44,6 +44,7 @@ class ChatDetailScreen extends GetView<ChatDetailController> {
 
   Widget _buildMessageBox() {
     return GetBuilder<UserController>(
+      id: controller.user,
       builder: (userController) => Expanded(
         child: Scrollbar(
           child: ListView.builder(
@@ -65,7 +66,7 @@ class ChatDetailScreen extends GetView<ChatDetailController> {
 
   Widget _buildProfileBox() {
     return GetBuilder<UserController>(
-      id: controller.userIndex,
+      id: controller.user,
       builder: (userController) => ProfileStatusBox(
         user: userController.connectUser[controller.userIndex],
       ),
