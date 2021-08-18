@@ -1,0 +1,55 @@
+name: chat_app
+description: Chat application by use sokcet.io
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+
+  # state management
+  get: ^4.3.8
+  # secure storage
+  flutter_secure_storage: ^4.2.1
+  # icons 
+  font_awesome_flutter: ^9.1.0
+  # socket io for clients
+  socket_io_client: ^1.0.1
+  # select image # crop image
+  image_picker: ^0.8.3+2
+  image_cropper: ^1.4.1
+
+  # native splash
+  flutter_native_splash: ^1.2.1
+
+flutter_native_splash:
+  color: "#0A0A0A"
+  android: true
+  ios: true
+  fullscreen: true
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+     - assets/images/
+
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+

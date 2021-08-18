@@ -1,0 +1,3 @@
+class TranslateHelper {
+  TranslateHelper._();
+}
