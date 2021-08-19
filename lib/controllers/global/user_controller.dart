@@ -1,7 +1,9 @@
-import 'package:chat_app/models/message.dart';
-import 'package:chat_app/models/user.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:chat_app/controllers/controller.dart';
+
+import '/models/message.dart';
+import '/models/user.dart';
 import '/services/service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserController extends GetxController {
@@ -14,12 +16,9 @@ class UserController extends GetxController {
 
   late ScrollController scrollController;
 
-  late FocusNode focusNode;
-
   @override
   void onInit() {
     scrollController = ScrollController();
-    focusNode = FocusNode();
     currentUser = secureStorage.currentUser;
     token = secureStorage.token;
     super.onInit();
@@ -44,23 +43,26 @@ class UserController extends GetxController {
     update();
   }
 
-  void addUpdateConnectUser(User user, {bool? isOnline}) {
+  void addConnectUser(User user) {
     int index = connectUser.indexWhere((u) => u.phone == user.phone);
-    if (isOnline == null) {
-      if (index == -1) {
-        connectUser.add(user);
-      } else {
-        connectUser[index].isOnline = true;
-      }
+    if (index == -1) {
+      connectUser.add(user);
     } else {
-      connectUser[index].isOnline = isOnline;
+      connectUser[index].isOnline = true;
     }
     update();
   }
 
+  void setUserConnectionStatus(User user) {
+    int index = connectUser.indexWhere((con) => user.phone == con.phone);
+    if (index != -1) {
+      connectUser[index].isOnline = false;
+      update();
+    }
+  }
+
   void setTyping(User user, bool status) {
-    int index =
-        connectUser.indexWhere((element) => element.phone == user.phone);
+    int index = connectUser.indexWhere((con) => con.phone == user.phone);
     if (index != -1) {
       connectUser[index].typing = status;
       update();
@@ -74,12 +76,19 @@ class UserController extends GetxController {
         (u) => u.phone == sender!.phone || u.phone == receiver!.phone);
     if (index != -1) {
       connectUser[index].messages.add(message);
-      scrollController.animateTo(
-        scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-      update([index]);
+      // if (index != 0) {
+      //   final lastMessage = connectUser.removeAt(index);
+      //   connectUser.insert(0, lastMessage);
+      // }
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+      Get.find<ChatController>().addUserMessage(connectUser[index]);
+      update(['message']);
     }
   }
 }

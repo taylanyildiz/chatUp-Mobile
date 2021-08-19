@@ -1,13 +1,10 @@
 import 'dart:async';
-
-import 'package:chat_app/models/message.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/services/service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ChatDetailController extends GetxController {
-  late int userIndex;
   late User user;
 
   late TextEditingController messageController;
@@ -18,7 +15,6 @@ class ChatDetailController extends GetxController {
   @override
   void onInit() {
     messageController = TextEditingController();
-    userIndex = Get.arguments['userIndex'];
     user = Get.arguments['user'];
     super.onInit();
   }

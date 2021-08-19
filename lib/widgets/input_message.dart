@@ -1,6 +1,4 @@
-import 'dart:developer';
-
-import 'package:chat_app/constants/constant.dart';
+import '/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -8,11 +6,12 @@ class InputMessage extends StatefulWidget {
   InputMessage({
     Key? key,
     TextEditingController? textController,
-    this.onChanded,
     required this.onSend,
     required this.onAdd,
+    this.onChanded,
     this.padding,
     this.radius,
+    this.marginBottom,
   })  : this.textController = textController ?? TextEditingController(),
         super(key: key);
 
@@ -22,6 +21,7 @@ class InputMessage extends StatefulWidget {
   final Function(String?)? onChanded;
   final double? padding;
   final double? radius;
+  final double? marginBottom;
 
   @override
   _InputMessageState createState() => _InputMessageState();
@@ -41,13 +41,15 @@ class _InputMessageState extends State<InputMessage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60.0,
+      height: widget.radius ?? 60.0,
+      color: Colors.transparent,
+      margin: EdgeInsets.only(bottom: widget.marginBottom ?? 0.0),
       padding: EdgeInsets.symmetric(
           horizontal: widget.padding ?? 20.0, vertical: 10.0),
       child: Stack(
         children: [
           SizedBox(
-            height: 60.0,
+            height: widget.radius ?? 60.0,
             child: TextField(
               controller: widget.textController,
               onChanged: widget.onChanded,
@@ -60,15 +62,15 @@ class _InputMessageState extends State<InputMessage> {
                 fillColor: Colors.white,
                 hintText: 'Message...',
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(60.0),
+                  borderRadius: BorderRadius.circular(widget.radius ?? 60.0),
                   borderSide: BorderSide(color: Colors.transparent),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(60.0),
+                  borderRadius: BorderRadius.circular(widget.radius ?? 60.0),
                   borderSide: BorderSide(color: Colors.transparent),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(60.0),
+                  borderRadius: BorderRadius.circular(widget.radius ?? 60.0),
                   borderSide: BorderSide(color: Colors.transparent),
                 ),
                 prefixIcon: Container(

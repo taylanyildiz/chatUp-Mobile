@@ -16,6 +16,9 @@ class MessageBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final isMe = user.messages[index].sender!.phone == currentUser.phone;
     final isRead = true;
+    if (!isMe && !user.messages[index].isRead) {
+      user.messages[index].isRead = true;
+    }
     return Container(
       margin: EdgeInsets.only(
         right: !isMe ? 150.0 : 0.0,

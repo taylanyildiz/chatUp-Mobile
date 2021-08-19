@@ -1,5 +1,4 @@
 import 'package:chat_app/routers/routers.dart';
-
 import '/widgets/widget.dart';
 import '/constants/constant.dart';
 import '/controllers/controller.dart';
@@ -7,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends GetView<ChatController> {
   ChatScreen({Key? key}) : super(key: key);
 
   @override
@@ -16,47 +15,69 @@ class ChatScreen extends StatelessWidget {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: _buildAppBar(),
-        body: Container(
-          color: CustomColors.chatBox,
-          child: _buildBody(),
-        ),
+        body: _buildBody(),
       ),
     );
   }
 
   Widget _buildBody() {
     return GetBuilder<ChatController>(
-      init: ChatController(),
-      builder: (controller) => NotificationListener<ScrollNotification>(
-        onNotification: controller.onNotification,
-        child: Scrollbar(
-          child: GetBuilder<UserController>(
-            builder: (userController) => ListView.builder(
-              physics: BouncingScrollPhysics(),
-              controller: controller.scrollController,
-              itemCount: userController.connectUser.length + 1,
-              itemBuilder: (_, index) {
-                if (index == 0) return _buildSerchBox(controller);
-                return ChatProfileBox(
-                  user: userController.connectUser[index - 1],
-                  onDetail: () => Get.toNamed(
-                    Routers.CHATDETAIL,
-                    arguments: {
-                      "userIndex": index - 1,
-                      "user": userController.connectUser[index - 1],
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
+      id: 'newMessage',
+      builder: (controller) => SearchListView(
+        itemCount: controller.users.length,
+        builder: (context, index) {
+          return _buildMessageProfileBox(controller, index);
+        },
       ),
     );
   }
 
-  Widget _buildSerchBox(ChatController controller) {
-    return SearchBox(opacity: controller.getOpacity(20));
+  InkWell _buildMessageProfileBox(ChatController controller, int index) {
+    return InkWell(
+      onTap: () => Get.toNamed(
+        Routers.CHATDETAIL,
+        arguments: {'user': controller.users[index]},
+      ),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+        child: Row(
+          children: [
+            Container(
+              width: 50.0,
+              height: 50.0,
+              margin: EdgeInsets.all(7.0),
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  controller.users[index].name!.characters.first.toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  controller.users[index].name! +
+                      ' ' +
+                      controller.users[index].lastName!,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17.0,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   AppBar _buildAppBar() {

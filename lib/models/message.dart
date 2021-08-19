@@ -6,6 +6,7 @@ class Message {
     this.message,
     this.sender,
     this.receiver,
+    this.isRead = false,
     this.createdAt,
   });
 
@@ -14,6 +15,7 @@ class Message {
   User? sender;
   User? receiver;
   String? createdAt;
+  bool isRead;
 
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(

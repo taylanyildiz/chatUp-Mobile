@@ -5,5 +5,7 @@ class NavBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(NavController());
+    Get.put(DirectroyController());
+    Get.put(ChatController());
   }
 }
