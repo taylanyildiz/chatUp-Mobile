@@ -54,7 +54,7 @@ class _LogRegButtonState extends State<LogRegButton>
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
+      margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
       height: 60.0,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),

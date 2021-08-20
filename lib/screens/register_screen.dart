@@ -95,37 +95,32 @@ class RegisterScreen extends GetView<RegisterController> {
   }
 
   Widget _buildTermOfUse() {
-    return Positioned(
-      left: 0,
-      right: 0,
-      bottom: 300.0,
-      child: Opacity(
-        opacity: (1 - controller.page).clamp(0.0, 1.0),
-        child: Center(
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: 'By registering, you accept the  ',
-                  style: TextStyle(
-                    color: CustomColors.hintColor,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                  ),
+    return Opacity(
+      opacity: (1 - controller.page).clamp(0.0, 1.0),
+      child: Center(
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'By registering, you accept the  ',
+                style: TextStyle(
+                  color: CustomColors.hintColor,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w600,
                 ),
-                TextSpan(
-                  text: 'terms of use.',
-                  style: TextStyle(
-                    color: Colors.white,
-                    decoration: TextDecoration.underline,
-                    fontSize: 17.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => print('Term of Use'),
+              ),
+              TextSpan(
+                text: 'terms of use.',
+                style: TextStyle(
+                  color: Colors.white,
+                  decoration: TextDecoration.underline,
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () => print('Term of Use'),
+              ),
+            ],
           ),
         ),
       ),

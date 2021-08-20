@@ -25,6 +25,7 @@ class MessageBox extends StatelessWidget {
         left: isMe ? 150.0 : 0.0,
         top: 10.0,
       ),
+      constraints: BoxConstraints(),
       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
       decoration: BoxDecoration(
         color: isMe ? CustomColors.currentMessageBox : CustomColors.messageBox,
@@ -56,6 +57,7 @@ class MessageBox extends StatelessWidget {
               fontWeight: FontWeight.normal,
             ),
           ),
+          // created at message
           SizedBox(width: 5.0),
           isMe
               ? Icon(
@@ -63,6 +65,7 @@ class MessageBox extends StatelessWidget {
                   size: 15.0,
                 )
               : SizedBox.shrink()
+          // message read
         ],
       ),
     );

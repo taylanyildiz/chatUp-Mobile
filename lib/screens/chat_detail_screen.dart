@@ -28,6 +28,7 @@ class ChatDetailScreen extends GetView<ChatDetailController> {
 
   InputMessage _buildInputMessageBox() {
     return InputMessage(
+      marginBottom: 15.0,
       textController: controller.messageController,
       onChanded: controller.onChanged,
       onSend: controller.sendMessage,
