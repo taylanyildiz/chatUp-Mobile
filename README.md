@@ -1,4 +1,4 @@
 
 |              App Preview             |             Course Preview           |
 | :----------------------------------: | :----------------------------------: |
-| <a <img src="splash.png" width="250"></a> |<img src="entry.png" width="250"></a> |<a target="_blank"><img src="log.png" width="250"></a> |<a target="_blank"><img src="reg.png" width="250"></a> |
+| <a <img src="splash.png" width="250"></a> |<img src="entry.png" width="250"></a> |<img src="log.png" width="250"></a> |<img src="reg.png" width="250"></a> |
